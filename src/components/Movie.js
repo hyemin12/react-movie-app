@@ -2,6 +2,7 @@ import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 function Movie({ id, title, posterImg, originalTitle }) {
+  console.log(id);
   return (
     <div className="popular container">
       <img src={`https://image.tmdb.org/t/p/w500/${posterImg}`} alt={title} />

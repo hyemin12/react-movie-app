@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "../components/Movie";
-import SideBar from "../components/SideBar";
+import Header from "../components/Header";
+import Loader from "../components/Loader.js";
 const KEY = "903a8c8b994d1d2a652c3b000db52e4d";
 
 function Home() {
@@ -31,20 +32,23 @@ function Home() {
 
   return (
     <div className="home">
-      <SideBar />
+      <Header />
       {loading ? (
-        <h1>Loading...</h1>
+        <Loader />
       ) : (
-        <div className="popular-wrapper">
-          {movies.map((movie) => (
-            <Movie
-              key={movie.id}
-              id={movie.id}
-              posterImg={movie.poster_path}
-              title={movie.title}
-              originalTitle={movie.original_title}
-            />
-          ))}
+        <div className="movie-wrapper">
+          <h2 className="routes-title">가장 인기있는 영화</h2>
+          <div className="movie-item-wrapper">
+            {movies.map((movie) => (
+              <Movie
+                key={movie.id}
+                id={movie.id}
+                posterImg={movie.poster_path}
+                title={movie.title}
+                originalTitle={movie.original_title}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>
