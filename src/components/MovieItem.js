@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import Video from "./Video.js";
+
 function MoveItem({
   title,
   posterImg,
@@ -12,20 +15,33 @@ function MoveItem({
   cast,
   crew,
   ranking,
+  similar,
+  media,
 }) {
-  console.log(typeof crew[0].popularity);
-  const actors = cast.slice(0, 4).filter(function (actor) {
-    if (actor.popularity > 9) {
-      return actor;
-    }
+  cast.splice(3, cast.length - 4).sort(function (a, b) {
+    return a.popularity < b.popularity
+      ? 1
+      : a.popularity > b.popularity
+      ? -1
+      : 0;
   });
-  console.log(actors);
+  console.log(media[0].key);
   const directors = crew.filter(function (director) {
     return director.department === "Directing";
   });
+
+  similar.splice(3, similar.length - 4).sort(function (c, d) {
+    return c.popularity < d.popularity
+      ? 1
+      : c.popularity > d.popularity
+      ? -1
+      : 0;
+  });
+
   const backImg = `https://image.tmdb.org/t/p/original/${bgImg}`;
+
   return (
-    <div>
+    <>
       <div
         className="movie-item"
         style={{ backgroundImage: `url(${backImg})` }}
@@ -49,7 +65,7 @@ function MoveItem({
               <div>
                 <h4>배우</h4>
                 <ul className="actors">
-                  {actors.map((actor) => {
+                  {cast.map((actor) => {
                     return <li key={actor.id}>{actor.name}</li>;
                   })}
                 </ul>
@@ -76,56 +92,61 @@ function MoveItem({
               </div>
               <div>
                 <h4>Ranking</h4>
-                <span>{ranking} / 10</span>
+                <span>{ranking}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div className="row">
-        <div className="aside">
-          <div className="sns-wrapper">
-            <h4>OFFICIAL</h4>
-            <ul className="sns">
-              <li>facebook</li>
-              <li>twitter</li>
-              <li>site</li>
-            </ul>
+        <div className="row-wrapper">
+          <div className="aside">
+            <div className="sns-wrapper">
+              <h4>OFFICIAL</h4>
+              <ul className="sns">
+                <li>facebook</li>
+                <li>twitter</li>
+                <li>site</li>
+              </ul>
+            </div>
+            <div className="similar-wrapper">
+              <h4>비슷한 영화</h4>
+              <ul className="similar-list">
+                {similar.map((similarItem) => {
+                  return (
+                    <li key={similarItem.id}>
+                      <Link to={`/movie/${similarItem.id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/original/${similarItem.backdrop_path}`}
+                          alt={title}
+                        />
+                        <div className="content">
+                          <span>{similarItem.title}</span>
+                          <span>★ {similarItem.vote_average}</span>
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
-          <div className="actor-wrapper">
-            <h4>주요 출연진</h4>
-            <ul className="actors">
-              {actors.map((actor) => {
-                return (
-                  <li key={actor.id}>
-                    <div className="actor-img">
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
-                        alt={actor.name}
-                      />
-                    </div>
-                    <div className="actor-name">
-                      <span>{actor.name}</span>
-                      <span className="actor-chracter">{actor.character}</span>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+          <div className="contents-wrapper">
+            <div className="overview">
+              <h4>줄거리</h4>
+              <span>{overview}</span>
+            </div>
+            <div className="video">
+              <h4>공식 영상</h4>
+              <ul className="video">
+                <li>{/* <Video media={media} /> */}</li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <div className="overview">
-          <h4>줄거리</h4>
-          <span>{overview}</span>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
 export default MoveItem;
-
-// https://www.themoviedb.org/search?query={text}
-// https://www.themoviedb.org/movie/{movie id}}
-
-// url('/t/p/w1920_and_h800_multi_faces/AoSZyb37ljMAxw0RdeQEBHKtgcc.jpg')

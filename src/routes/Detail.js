@@ -2,15 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import Header from "../components/Header";
 import MovieItem from "../components/MovieItem";
 
-const KEY = "903a8c8b994d1d2a652c3b000db52e4d";
-
 function Detail() {
+  const KEY = process.env.REACT_APP_API_KEY;
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   const [credit, setCredit] = useState([]);
+  const [similar, setsimilar] = useState([]);
+  const [media, setMedia] = useState([]);
   const { id } = useParams();
   console.log(id);
 
@@ -21,20 +21,26 @@ function Detail() {
     const credits = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${KEY}&language=en-ko`
     );
+    const similars = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${KEY}&language=en-ko`
+    );
+    const media = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${KEY}&language=en-ko`
+    );
+
     setMovie(response.data);
     setCredit(credits.data);
+    setsimilar(similars.data.results);
+    setMedia(media.data.results);
     setLoading(false);
-    console.log(credits.data);
-    console.log(response.data.results);
-    console.log(response);
+    console.log(similars.data);
+    console.log(media.data);
   };
-  for (let i = 0; i < 4; i++) {}
   useEffect(() => {
     getMovies();
   }, []);
   return (
     <div className="detail">
-      <Header />
       {loading ? (
         <Loader />
       ) : (
@@ -53,6 +59,8 @@ function Detail() {
           ranking={movie.vote_average}
           cast={credit.cast}
           crew={credit.crew}
+          similar={similar}
+          media={media}
         />
       )}
     </div>

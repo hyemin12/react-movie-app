@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "../components/Movie";
-import Header from "../components/Header";
 import Loader from "../components/Loader.js";
-const KEY = "903a8c8b994d1d2a652c3b000db52e4d";
 
 function Home() {
+  const KEY = process.env.REACT_APP_API_KEY;
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
-
-  const current = new Date();
-  const today =
-    current.getFullYear() +
-    String(current.getMonth()).padStart(2, "0") +
-    String(current.getDate()).padStart(2, "0");
-  console.log(today);
 
   const getMovies = async () => {
     const response = await axios.get(
@@ -32,7 +24,6 @@ function Home() {
 
   return (
     <div className="home">
-      <Header />
       {loading ? (
         <Loader />
       ) : (

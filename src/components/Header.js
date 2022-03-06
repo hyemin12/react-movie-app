@@ -6,22 +6,23 @@ function SideBar() {
       <Link to="/" className="logo">
         <h1>Box Office : Movie</h1>
       </Link>
-      <ul className="nav">
-        <li>
-          <Link to="/" className="link-active">
-            인기 영화
-          </Link>
-        </li>
-        <li>
-          <Link to="/">현재 상영중</Link>
-        </li>
-        <li>
-          <Link to="/">개봉 예정</Link>
-        </li>
-        <li>
-          <Link to="/">높은 평점</Link>
-        </li>
-      </ul>
+      <nav className="nav">
+        <Link to="/" activeStyle={{ color: "#fdc000" }}>
+          인기 영화
+        </Link>
+
+        <Link to="/now-playing" activeStyle={{ color: "#fdc000" }}>
+          현재 상영중
+        </Link>
+
+        <Link to="/upcoming" activeStyle={{ color: "#fdc000" }}>
+          개봉 예정
+        </Link>
+
+        <Link to="/top-ranked" activeStyle={{ color: "#fdc000" }}>
+          높은 평점
+        </Link>
+      </nav>
       <div className="search">
         <input
           type="text"

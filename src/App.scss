@@ -5,6 +5,8 @@
   box-sizing: border-box;
 }
 body {
+  width: 100vw;
+  overflow-x: hidden;
   font-family: "Noto Sans KR", sans-serif;
   background-color: #1a1a1a;
   box-sizing: border-box;
@@ -23,8 +25,11 @@ li {
 }
 $pointColor: #fdc000;
 
-.container {
-  width: 100vw;
+// 텍스트 줄이기
+@mixin textOverflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 // LOADER
@@ -172,29 +177,24 @@ $pointColor: #fdc000;
       }
       h4 {
         width: 190px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+        @include textOverflow();
       }
       p {
         width: 190px;
         font-size: 12px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+        @include textOverflow();
       }
     }
   }
 }
 
 // ROUTE DETAIL
-.detail {
-  width: 100vw;
-}
 
 // MOVIE ITEM
 .movie-item {
+  width: 100vw;
   background-size: cover;
+  overflow: hidden;
   .overlay-bg {
     width: 100%;
     height: 100%;
@@ -202,6 +202,7 @@ $pointColor: #fdc000;
   }
   .movie-item-wrapper {
     display: flex;
+    justify-content: center;
     padding: 70px 120px;
     .poster img {
       width: 400px;
@@ -210,7 +211,7 @@ $pointColor: #fdc000;
       padding: 10px 0;
     }
     .movie-detail {
-      padding: 40px 0;
+      // padding: 40px 0;
       margin-left: 50px;
       color: #fff;
       .labels {
@@ -282,48 +283,59 @@ $pointColor: #fdc000;
 .row {
   display: flex;
   justify-content: center;
-  padding: 0 100px;
-  .sns-wrapper {
-    padding: 50px;
-    color: #ccc;
-    font-size: 14px;
-    h4 {
-      text-align: center;
-      margin-bottom: 10px;
+  padding: 50px 100px;
+  .row-wrapper {
+    display: flex;
+    width: 1150px;
+    .sns-wrapper {
+      padding: 0 50px 50px 50px;
+      color: #ccc;
+      font-size: 14px;
+      h4 {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .sns {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
     }
-    .sns {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-  }
-  .actor-wrapper {
-    width: 100%;
-    background-color: #2f2f2f;
-    color: #fff;
-    padding: 30px 80px 20px 30px;
-    h4 {
-      font-size: 20px;
-      margin-bottom: 30px;
-    }
-    li {
-      display: flex;
-      align-items: end;
-      margin-bottom: 10px;
-      .actor-img {
+    .similar-wrapper {
+      padding: 35px 35px 20px 35px;
+      background-color: #333;
+      color: #fff;
+      h4 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      li {
+        margin-bottom: 30px;
         img {
-          width: 100px;
-          border-radius: 5px;
-          object-fit: cover;
+          width: 230px;
+        }
+        .content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          span:first-child {
+            width: 160px;
+            @include textOverflow();
+          }
+          span:last-child {
+            font-size: 13px;
+          }
         }
       }
-
-      .actor-name {
-        padding-bottom: 10px;
-        margin-left: 20px;
-        .actor-chracter {
-          display: block;
-          font-size: 12px;
+    }
+    .contents-wrapper {
+      margin-left: 70px;
+      color: #fff;
+      .overview {
+        margin-bottom: 70px;
+        h4 {
+          font-size: 24px;
+          margin-bottom: 20px;
         }
       }
     }
