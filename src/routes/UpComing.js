@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
-import Movie from "../components/Movie";
+import MovieList from "../components/MovieList";
 
 function Upcoming() {
   const KEY = process.env.REACT_APP_API_KEY;
@@ -31,7 +31,7 @@ function Upcoming() {
           <div className="movie-item-wrapper">
             {movies &&
               movies.map((upMovie) => (
-                <Movie
+                <MovieList
                   key={upMovie.id}
                   id={upMovie.id}
                   posterImg={upMovie.poster_path}

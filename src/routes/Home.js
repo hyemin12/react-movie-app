@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Movie from "../components/Movie";
+import MovieList from "../components/MovieList";
 import Loader from "../components/Loader.js";
 
 function Home() {
@@ -13,8 +13,6 @@ function Home() {
       `https://api.themoviedb.org/3/movie/popular?api_key=${KEY}&language=ko&page=1®ion=KR`
     );
     setMovies(response.data.results);
-    console.log(response);
-    console.log(response.data.results);
     setLoading(false);
   };
 
@@ -31,7 +29,7 @@ function Home() {
           <h2 className="routes-title">가장 인기있는 영화</h2>
           <div className="movie-item-wrapper">
             {movies.map((movie) => (
-              <Movie
+              <MovieList
                 key={movie.id}
                 id={movie.id}
                 posterImg={movie.poster_path}

@@ -4,37 +4,39 @@ import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import MovieItem from "../components/MovieItem";
 
+const KEY = process.env.REACT_APP_API_KEY;
+
+const url = axios.create({
+  baseURL: "https://api.themoviedb.org/3/movie/",
+  params: {
+    api_key: KEY,
+    language: "ko",
+  },
+});
+
 function Detail() {
-  const KEY = process.env.REACT_APP_API_KEY;
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   const [credit, setCredit] = useState([]);
   const [similar, setsimilar] = useState([]);
-  const [media, setMedia] = useState([]);
+  const [keywords, setkeywords] = useState([]);
+  const [socials, setSocials] = useState([]);
+
   const { id } = useParams();
-  console.log(id);
 
   const getMovies = async () => {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${KEY}&language=ko`
-    );
-    const credits = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${KEY}&language=en-ko`
-    );
-    const similars = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${KEY}&language=en-ko`
-    );
-    const media = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${KEY}&language=en-ko`
-    );
+    const response = await url.get(`${id}`);
+    const resCredits = await url.get(`${id}/credits`);
+    const resSimilars = await url.get(`${id}/similar`);
+    const resKeywords = await url.get(`${id}/keywords`);
+    const resSocial = await url.get(`${id}/external_ids`);
 
     setMovie(response.data);
-    setCredit(credits.data);
-    setsimilar(similars.data.results);
-    setMedia(media.data.results);
+    setCredit(resCredits.data);
+    setsimilar(resSimilars.data.results);
+    setkeywords(resKeywords.data.keywords);
+    setSocials(resSocial.data);
     setLoading(false);
-    console.log(similars.data);
-    console.log(media.data);
   };
   useEffect(() => {
     getMovies();
@@ -60,7 +62,8 @@ function Detail() {
           cast={credit.cast}
           crew={credit.crew}
           similar={similar}
-          media={media}
+          keywords={keywords}
+          socials={socials}
         />
       )}
     </div>

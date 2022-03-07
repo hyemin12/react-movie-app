@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Video from "./Video.js";
+import { FaTwitter, FaFacebookSquare, FaInstagram } from "react-icons/fa";
 
 function MoveItem({
   title,
@@ -16,7 +16,8 @@ function MoveItem({
   crew,
   ranking,
   similar,
-  media,
+  socials,
+  keywords,
 }) {
   cast.splice(3, cast.length - 4).sort(function (a, b) {
     return a.popularity < b.popularity
@@ -25,7 +26,6 @@ function MoveItem({
       ? -1
       : 0;
   });
-  console.log(media[0].key);
   const directors = crew.filter(function (director) {
     return director.department === "Directing";
   });
@@ -66,7 +66,7 @@ function MoveItem({
                 <h4>배우</h4>
                 <ul className="actors">
                   {cast.map((actor) => {
-                    return <li key={actor.id}>{actor.name}</li>;
+                    return <li key={actor.id}>{actor.name},</li>;
                   })}
                 </ul>
               </div>
@@ -74,7 +74,7 @@ function MoveItem({
                 <h4>감독</h4>
                 <ul className="directors">
                   {directors.map((director) => {
-                    return <li key={director.id}>{director.name}</li>;
+                    return <li key={director.id}>{director.name},</li>;
                   })}
                 </ul>
               </div>
@@ -101,12 +101,42 @@ function MoveItem({
       <div className="row">
         <div className="row-wrapper">
           <div className="aside">
-            <div className="sns-wrapper">
+            <div className="social-wrapper">
               <h4>OFFICIAL</h4>
-              <ul className="sns">
-                <li>facebook</li>
-                <li>twitter</li>
-                <li>site</li>
+              <ul className="social">
+                {socials.facebook_id != null ? (
+                  <li>
+                    <a
+                      href={`https://www.facebook.com/${socials.facebook_id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaFacebookSquare />
+                    </a>
+                  </li>
+                ) : null}
+                {socials.twitter_id != null ? (
+                  <li>
+                    <a
+                      href={`https://twitter.com/${socials.twitter_id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaTwitter />
+                    </a>
+                  </li>
+                ) : null}
+                {socials.instagram_id != null ? (
+                  <li>
+                    <a
+                      href={`https://www.instagram.com/${socials.instagram_id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaInstagram />
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             </div>
             <div className="similar-wrapper">
@@ -136,10 +166,12 @@ function MoveItem({
               <h4>줄거리</h4>
               <span>{overview}</span>
             </div>
-            <div className="video">
-              <h4>공식 영상</h4>
-              <ul className="video">
-                <li>{/* <Video media={media} /> */}</li>
+            <div className="keyword-wrapper">
+              <h4>Keywords</h4>
+              <ul className="keyword">
+                {keywords.map((keword) => (
+                  <li key={keword.name}>{keword.name}</li>
+                ))}
               </ul>
             </div>
           </div>

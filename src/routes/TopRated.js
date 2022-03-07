@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
-import Movie from "../components/Movie";
+import MovieList from "../components/MovieList";
 
 function TopRated() {
   const KEY = process.env.REACT_APP_API_KEY;
@@ -30,7 +30,7 @@ function TopRated() {
           <div className="movie-item-wrapper">
             {movies &&
               movies.map((movie) => (
-                <Movie
+                <MovieList
                   key={movie.id}
                   id={movie.id}
                   posterImg={movie.poster_path}
