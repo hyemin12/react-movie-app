@@ -123,6 +123,13 @@ $pointColor: #fdc000;
   width: 100vw;
   background-color: #111;
   padding: 10px 20px;
+  .nav-toggle {
+    display: none;
+    padding: 20px;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+  }
   .logo {
     padding: 20px;
     color: $pointColor;
@@ -290,53 +297,57 @@ $pointColor: #fdc000;
   padding: 50px 100px;
   .row-wrapper {
     display: flex;
+    flex-direction: row-reverse;
     width: 1150px;
-    .social-wrapper {
+    .aside {
       width: 300px;
-      padding: 0 50px 50px 50px;
-      color: #ccc;
-      font-size: 14px;
-      h4 {
-        text-align: center;
-        margin-bottom: 10px;
-      }
-      .social {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        font-size: 18px;
-        a:hover {
-          color: $pointColor;
+      .social-wrapper {
+        padding: 0 50px 50px 50px;
+        color: #ccc;
+        font-size: 14px;
+        h4 {
+          text-align: center;
+          margin-bottom: 10px;
         }
-      }
-    }
-    .similar-wrapper {
-      padding: 35px 35px 20px 35px;
-      background-color: #333;
-      color: #fff;
-      h4 {
-        font-size: 18px;
-        margin-bottom: 20px;
-      }
-      li {
-        margin-bottom: 30px;
-        img {
-          width: 230px;
-        }
-        .content {
+        .social {
           display: flex;
-          justify-content: space-between;
-          align-items: center;
-          span:first-child {
-            width: 160px;
-            @include textOverflow();
+          justify-content: center;
+          gap: 15px;
+          font-size: 18px;
+          a:hover {
+            color: $pointColor;
           }
-          span:last-child {
-            font-size: 13px;
+        }
+      }
+      .similar-wrapper {
+        padding: 35px 35px 20px 35px;
+        background-color: #333;
+        color: #fff;
+        h4 {
+          font-size: 18px;
+          margin-bottom: 20px;
+        }
+        li {
+          margin-bottom: 30px;
+          img {
+            width: 230px;
+          }
+          .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            span:first-child {
+              width: 160px;
+              @include textOverflow();
+            }
+            span:last-child {
+              font-size: 13px;
+            }
           }
         }
       }
     }
+
     .contents-wrapper {
       margin-left: 70px;
       color: #fff;
@@ -348,10 +359,11 @@ $pointColor: #fdc000;
         }
       }
       .images-wrapper {
-        max-width: 1000px;
-        width: 700px;
+        max-width: 1500px;
+        width: 780px;
         overflow-x: auto;
         white-space: nowrap;
+        margin-bottom: 70px;
         h4 {
           font-size: 18px;
           margin-bottom: 20px;
@@ -363,8 +375,22 @@ $pointColor: #fdc000;
             img {
               height: 100%;
             }
+            iframe {
+              border: none;
+            }
           }
         }
+      }
+      .images-wrapper::-webkit-scrollbar {
+        height: 12px;
+      }
+      .images-wrapper::-webkit-scrollbar-track {
+        background-color: #333;
+        border-radius: 5px;
+      }
+      .images-wrapper::-webkit-scrollbar-thumb {
+        background-color: #666;
+        border-radius: 5px;
       }
       .keyword-wrapper {
         h4 {
@@ -382,6 +408,107 @@ $pointColor: #fdc000;
             border: 1px solid #444;
             border-radius: 20px;
             margin-bottom: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// MEDIA QUERY
+@media screen and (max-width: 1149px) {
+  .header {
+    padding: 20px 30px;
+    .nav-toggle {
+      display: block;
+    }
+    .logo {
+      font-size: 16px;
+      padding: 0;
+    }
+    .nav,
+    .search {
+      display: none;
+    }
+  }
+  .toggle-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    padding: 20px 40px;
+    background-color: #111;
+    font-size: 20px;
+    li:hover {
+      color: $pointColor;
+    }
+  }
+  .mobile-icon-search {
+    margin-right: 20px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .mobile-input {
+    width: 100%;
+    padding: 0 40px 20px 40px;
+    background-color: #111;
+    input {
+      width: 100%;
+      padding: 15px;
+      background-color: #333;
+      border: none;
+      color: #fff;
+    }
+    input:focus {
+      outline: none;
+    }
+  }
+
+  .detail {
+    .movie-item-wrapper {
+      display: block;
+      .poster {
+        display: none;
+      }
+      .movie-detail {
+        display: block;
+        margin-left: 0;
+        h4 {
+          font-size: 16px;
+        }
+        h1 {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+  .row {
+    .row-wrapper {
+      display: block;
+      width: 100vw;
+      .contents-wrapper {
+        margin-left: 0;
+        padding: 20px 50px;
+        .images-wrapper {
+          width: 100vw;
+        }
+        .keyword-wrapper {
+          margin-bottom: 40px;
+        }
+      }
+      .aside {
+        width: 100vw;
+        padding: 20px 50px;
+        .social-wrapper {
+          display: none;
+        }
+        .similar-wrapper {
+          background-color: transparent;
+          padding: 0;
+          .similar-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
           }
         }
       }
