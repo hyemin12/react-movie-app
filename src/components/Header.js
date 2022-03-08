@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
@@ -26,6 +26,7 @@ function Header() {
     );
     setInputQuery(result.data);
     history.push(`/search/${query}`);
+    setQuery("");
     console.log(result.data);
   };
   function handlePress(event) {

@@ -1,6 +1,5 @@
 import MovieList from "../components/MovieList.js";
 import { useSearchContext } from "../search_context.js";
-import Loader from "../components/Loader";
 
 function Search() {
   const { inputQuery } = useSearchContext();
