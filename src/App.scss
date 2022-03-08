@@ -194,8 +194,6 @@ $pointColor: #fdc000;
   }
 }
 
-// ROUTE DETAIL
-
 // MOVIE ITEM
 .movie-item {
   width: 100vw;
@@ -347,6 +345,25 @@ $pointColor: #fdc000;
         h4 {
           font-size: 24px;
           margin-bottom: 20px;
+        }
+      }
+      .images-wrapper {
+        max-width: 1000px;
+        width: 700px;
+        overflow-x: auto;
+        white-space: nowrap;
+        h4 {
+          font-size: 18px;
+          margin-bottom: 20px;
+        }
+        .still-images {
+          display: flex;
+          height: 257px;
+          li {
+            img {
+              height: 100%;
+            }
+          }
         }
       }
       .keyword-wrapper {

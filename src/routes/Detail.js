@@ -11,6 +11,7 @@ const url = axios.create({
   params: {
     api_key: KEY,
     language: "ko",
+    include_image_language: "en",
   },
 });
 
@@ -21,6 +22,7 @@ function Detail() {
   const [similar, setsimilar] = useState([]);
   const [keywords, setkeywords] = useState([]);
   const [socials, setSocials] = useState([]);
+  const [videos, setVideos] = useState([]);
 
   const { id } = useParams();
 
@@ -30,12 +32,15 @@ function Detail() {
     const resSimilars = await url.get(`${id}/similar`);
     const resKeywords = await url.get(`${id}/keywords`);
     const resSocial = await url.get(`${id}/external_ids`);
-
+    const resVideo = await url.get(`${id}/videos`);
+    console.log(resVideo);
+    console.log(response.data);
     setMovie(response.data);
     setCredit(resCredits.data);
     setsimilar(resSimilars.data.results);
     setkeywords(resKeywords.data.keywords);
     setSocials(resSocial.data);
+    setVideos(resVideo.data.results);
     setLoading(false);
   };
   useEffect(() => {
@@ -64,6 +69,7 @@ function Detail() {
           similar={similar}
           keywords={keywords}
           socials={socials}
+          videos={videos}
         />
       )}
     </div>

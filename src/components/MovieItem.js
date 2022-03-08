@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaTwitter, FaFacebookSquare, FaInstagram } from "react-icons/fa";
+// import ReactPlayer from "react-player/lazy";
 
 function MoveItem({
   title,
@@ -18,6 +19,7 @@ function MoveItem({
   similar,
   socials,
   keywords,
+  videos,
 }) {
   cast.splice(3, cast.length - 4).sort(function (a, b) {
     return a.popularity < b.popularity
@@ -26,7 +28,8 @@ function MoveItem({
       ? -1
       : 0;
   });
-  const directors = crew.filter(function (director) {
+  console.log(overview);
+  const directors = crew.splice(3, crew.length - 4).filter(function (director) {
     return director.department === "Directing";
   });
 
@@ -104,39 +107,47 @@ function MoveItem({
             <div className="social-wrapper">
               <h4>OFFICIAL</h4>
               <ul className="social">
-                {socials.facebook_id != null ? (
-                  <li>
-                    <a
-                      href={`https://www.facebook.com/${socials.facebook_id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FaFacebookSquare />
-                    </a>
-                  </li>
-                ) : null}
-                {socials.twitter_id != null ? (
-                  <li>
-                    <a
-                      href={`https://twitter.com/${socials.twitter_id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FaTwitter />
-                    </a>
-                  </li>
-                ) : null}
-                {socials.instagram_id != null ? (
-                  <li>
-                    <a
-                      href={`https://www.instagram.com/${socials.instagram_id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FaInstagram />
-                    </a>
-                  </li>
-                ) : null}
+                {socials.facebook_id == null &&
+                socials.instagram_id == null &&
+                socials.twitter_id == null ? (
+                  <h4>준비중</h4>
+                ) : (
+                  <>
+                    {socials.facebook_id != null ? (
+                      <li>
+                        <a
+                          href={`https://www.facebook.com/${socials.facebook_id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <FaFacebookSquare />
+                        </a>
+                      </li>
+                    ) : null}
+                    {socials.twitter_id != null ? (
+                      <li>
+                        <a
+                          href={`https://twitter.com/${socials.twitter_id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <FaTwitter />
+                        </a>
+                      </li>
+                    ) : null}
+                    {socials.instagram_id != null ? (
+                      <li>
+                        <a
+                          href={`https://www.instagram.com/${socials.instagram_id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <FaInstagram />
+                        </a>
+                      </li>
+                    ) : null}
+                  </>
+                )}
               </ul>
             </div>
             <div className="similar-wrapper">
@@ -163,16 +174,54 @@ function MoveItem({
           </div>
           <div className="contents-wrapper">
             <div className="overview">
-              <h4>줄거리</h4>
-              <span>{overview}</span>
+              {overview !== "" ? (
+                <>
+                  <h4>줄거리</h4>
+                  <span>{overview}</span>
+                </>
+              ) : null}
+            </div>
+            <div className="images-wrapper">
+              <h4>스틸 이미지</h4>
+              <ul className="still-images">
+                <li>
+                  {/* <ReactPlayer
+                    url={`https://www.youtube.com/watch?v=${videos[0].key}`}
+                  /> */}
+                  <iframe
+                    id="youtube-player"
+                    title="스파이더맨"
+                    type="text/html"
+                    width="457"
+                    height="257"
+                    src={`https://www.youtube.com/embed/${videos[0].key}`}
+                  />
+                </li>
+                <li>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500/${bgImg}`}
+                    alt={title}
+                  />
+                </li>
+                <li>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500/${posterImg}`}
+                    alt={title}
+                  />
+                </li>
+              </ul>
             </div>
             <div className="keyword-wrapper">
-              <h4>Keywords</h4>
-              <ul className="keyword">
-                {keywords.map((keword) => (
-                  <li key={keword.name}>{keword.name}</li>
-                ))}
-              </ul>
+              {keywords.length !== 0 ? (
+                <>
+                  <h4>Keywords</h4>
+                  <ul className="keyword">
+                    {keywords.map((keword) => (
+                      <li key={keword.name}>{keword.name}</li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
