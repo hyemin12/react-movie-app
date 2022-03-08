@@ -13,8 +13,6 @@ function Upcoming() {
       `https://api.themoviedb.org/3/movie/upcoming?api_key=${KEY}&language=ko&page=1®ion=KR`
     );
     setMovies(response.data.results);
-    console.log(response);
-    console.log(response.data.results);
     setLoading(false);
   };
 

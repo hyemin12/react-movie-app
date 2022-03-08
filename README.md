@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+# TMDB API를 활용한 영화검색 사이트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<a href="https://react-movie-app-1f5ff8.netlify.app" target="_blank" >
+<img src="./md_img/main2.png">
+</a>
 
-## Available Scripts
+Click image
 
-In the project directory, you can run:
+<br>
+<hr>
+<br>
 
-### `npm start`
+## 사용한 API
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+tmdb api
+영화 또는 TV 시리즈의 정보를 요청해서 가져올 수 있고,
+한국에 소개되지 않은 컨텐츠들도 찾을 수 있음  
+공식사이트 (https://developers.themoviedb.org/3)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<br>
 
-### `npm test`
+## 기능
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. 인기 영화, 현재 상영중인 영화, 개봉 예정 영화, 높은 평점 영화 정보 가져오기
+2. 해당 영화 제목 클릭 시 영화 상세정보 페이지로 이동하기
+   - 상세정보: 원제, 개봉일, 상영시간, 배우, 감독, 제작사, 장르, 평점, 줄거리, 이미지, 키워드, 비슷한 영화, 소셜 미디어 링크
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 페이지 구성 (routes)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+@ Home - 인기 영화 리스트 <Br>
+@ NowPlaying - 현재 상영중인 영화 리스트  
+@ UpComing - 개봉 예정 영화 리스트  
+@ TopRated - 높은 평점의 영화 리스트  
+@ Search - 검색 결과 페이지  
+@ Detail - 영화 상세 정보 페이지
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br>
+<hr>
+<br>
 
-### `npm run eject`
+## API 요청하기 (비동기 async / await)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+axios 라이브러리를 설치하여, api 요청함
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+const getMovies = async () => {
+  const response = await axios.get(
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${KEY}&language=ko&page=1®ion=KR`
+  );
+  setMovies(response.data.results);
+  setLoading(false);
+};
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+// 페이지가 라우팅되면 API 요청하는 함수 실행
+useEffect(() => {
+  getcomingMovies();
+}, []);
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<br>
+<hr>
+<br>
 
-## Learn More
+## 검색 기능 구현하기 (Context API 활용)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+\_\_ Header component 안에 검색 input 태그 작성
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+\_\_ src 폴더와 동일 루트에 글로벌로 관리할 context 파일 만들기(search_context.js)
 
-### Code Splitting
+\_\_ 사용자가 입력값을 입력하고 enter를 누르거나, 검색 아이콘을 누르면 진행할 함수 만들기
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- 사용자가 입력한 값을 변수 query 받아와서 검색값 요청하고, 받아오기
+- /search/입력값 페이지로 이동하고, input box의 값 초기화
 
-### Analyzing the Bundle Size
+```js
+const handleSearch = async () => {
+  const result = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
+    params: {
+      query: query,
+      api_key: KEY,
+      language: "ko",
+    },
+  });
+  setInputQuery(result.data);
+  history.push(`/search/${query}`);
+  setQuery("");
+  setIsSearch(false);
+  console.log(result.data);
+};
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+\_\_ 검색결과 페이지에서 공유된 state를 가져와 페이지에 데이터바인딩하기
 
-### Making a Progressive Web App
+- searchMovies: 검색 결과 array
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```js
+import MovieList from "../components/MovieList.js";
+import { useSearchContext } from "../search_context.js";
 
-### Advanced Configuration
+function Search() {
+  const { inputQuery } = useSearchContext();
+  console.log(inputQuery);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  const searchMovies = inputQuery.results;
+  return "나머지 코드들";
+}
+```
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br>
+<hr>
+<br>

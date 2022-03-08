@@ -13,7 +13,6 @@ function TopRated() {
       `https://api.themoviedb.org/3/movie/top_rated?api_key=${KEY}&language=ko&page=1®ion=KR`
     );
     setMovies(response.data.results);
-    console.log(response.data.results);
     setLoading(false);
   };
 

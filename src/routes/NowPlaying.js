@@ -13,7 +13,6 @@ function NowPlaying() {
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${KEY}&language=ko&page=1®ion=KR`
     );
     setMovie(response.data.results);
-    console.log(response.data.results);
     setLoading(false);
   };
 
