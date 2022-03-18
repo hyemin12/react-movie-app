@@ -168,9 +168,9 @@ $pointColor: #fdc000;
       right: 8px;
       cursor: pointer;
     }
-    .mobile-icon-search {
-      display: none;
-    }
+  }
+  .mobile-icon-search {
+    display: none;
   }
 }
 
@@ -179,9 +179,8 @@ $pointColor: #fdc000;
   padding: 40px;
   .movie-item-wrapper {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
   }
   .movie-list {
     margin-bottom: 20px;

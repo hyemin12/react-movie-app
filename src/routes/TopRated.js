@@ -25,7 +25,7 @@ function TopRated() {
         <Loader />
       ) : (
         <div className="movie-wrapper">
-          <h2 className="routes-title">현재 상영작</h2>
+          <h2 className="routes-title">높은 평점 영화</h2>
           <div className="movie-item-wrapper">
             {movies &&
               movies.map((movie) => (
