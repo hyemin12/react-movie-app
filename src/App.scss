@@ -420,6 +420,7 @@ $pointColor: #fdc000;
 // MEDIA QUERY
 @media screen and (max-width: 1149px) {
   .header {
+    width: 100%;
     padding: 20px 30px;
     .nav-toggle {
       display: block;
@@ -445,6 +446,7 @@ $pointColor: #fdc000;
     }
   }
   .mobile-icon-search {
+    display: block;
     margin-right: 20px;
     color: #fff;
     font-size: 20px;
